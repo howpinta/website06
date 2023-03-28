@@ -1,19 +1,24 @@
-name: website06
-on: push
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+
+
 jobs:
-  building-docker-image:
+  build:
+    name: Build
     runs-on: self-hosted
     steps:
       - name: Checkout code 
         uses: actions/checkout@v3
       - name: Clean
         continue-on-error: true
-        run: docker stop website06 && docker rm website06 && docker rmi howpinta/website06
+        run: docker stop website06 && docker rm website06 && docker rmi jaibw/website06
       - name: Build Image 
-        run: docker build -t howpinta/website06 .
-      - name: List Image
-        run: docker images
-      - name: Upload image to Docker Hub
-        run: docker push howpinta/website06
-      - name: Deploy
-        run: docker run -d --name=website06 -p 8080:80 howpinta/website06
+        run: docker build -t jaibw/website06 .
+      - name: kube-deploy
+        run: kubectl apply -f deployment.yaml
+      - name: list deployments
+        run: kubectl get deployments
