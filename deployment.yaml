@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: NAME-deployment
+  name: tang-deployment
   labels:
-    app: NAME
+    app: tang
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: NAME
+      app: tang
   template:
     metadata:
       labels:
-        app: NAME
+        app: tang
     spec:
       containers:
       - name: web
-        image: DOCKERID/REPONAME
+        image: howpinta/website06
         ports:
         - containerPort: 80
